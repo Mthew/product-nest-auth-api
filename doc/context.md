@@ -2,20 +2,17 @@
 
 ## Project Overview
 
-This is a **Product and Patient Management System** built with NestJS that provides authentication, authorization, and comprehensive management capabilities. The system is designed as a technical test demonstrating modern backend development practices with TypeScript, following Domain-Driven Design (DDD) and Clean Architecture principles.
+This is a **Product Management System** built with NestJS that provides authentication, authorization, and comprehensive management capabilities. The system is designed as a technical test demonstrating modern backend development practices with TypeScript, following Domain-Driven Design (DDD) and Clean Architecture principles.
 
 ## 🎯 Business Domain
 
-**Product & Healthcare Management**: The system manages both product catalogs and patient records, providing AI-assisted medical diagnosis suggestions based on medical history.
+**Product Management**: The system manages product catalogs, providing a comprehensive solution for product administration.
 
 ### Core Features:
 
 - **Product Management**: Full CRUD operations for product catalog
-- **Patient Management**: CRUD operations for patient records
 - **User Authentication**: JWT-based authentication system
 - **Role-Based Authorization**: Admin and Seller roles with different permissions
-- **AI Diagnosis**: Integration with OpenAI and simulated AI services for medical diagnosis suggestions
-- **Medical History Tracking**: Comprehensive patient medical history management
 - **Product Catalog**: Comprehensive product management with categories and pricing
 
 ## 🏗️ Architecture & Design Patterns
@@ -45,14 +42,9 @@ This is a **Product and Patient Management System** built with NestJS that provi
    - Dependency injection for loose coupling
 
 3. **Provider Pattern**
-   - AI Service Provider for multiple AI implementations
    - Repository providers for data access abstraction
 
-4. **Strategy Pattern**
-   - Multiple AI diagnosis services (OpenAI, Simulated)
-   - Configurable service selection
-
-5. **Dependency Injection**
+4. **Dependency Injection**
    - NestJS native DI container
    - Interface-based dependencies
 
@@ -76,11 +68,6 @@ This is a **Product and Patient Management System** built with NestJS that provi
 - **bcrypt** - Password hashing
 - **class-validator** - Input validation
 - **class-transformer** - Data transformation
-
-### AI & External Services
-
-- **OpenAI SDK 4.x** - AI diagnosis integration
-- **Simulated AI Service** - Fallback/development AI service
 
 ### Development & Build Tools
 
@@ -131,20 +118,6 @@ src/
     │   ├── infrastructure/          # Product infrastructure
     │   │   └── persistence/        # Repository implementations
     │   └── presentation/            # Product controllers
-    ├── patients/                    # Patient management module
-    │   ├── application/             # Patient business logic
-    │   │   ├── commands/           # CQRS commands
-    │   │   ├── queries/            # CQRS queries
-    │   │   ├── dtos/               # Data transfer objects
-    │   │   └── services/           # Application services
-    │   ├── domain/                  # Patient domain
-    │   │   ├── entities/           # Domain entities
-    │   │   ├── exceptions/         # Domain exceptions
-    │   │   └── interfaces/         # Domain interfaces
-    │   ├── infrastructure/          # Patient infrastructure
-    │   │   ├── ai/                 # AI service implementations
-    │   │   └── persistence/        # Repository implementations
-    │   └── presentation/            # Patient controllers
     └── user/                        # User management module
         ├── application/             # User business logic
         ├── domain/                  # User domain
@@ -170,34 +143,10 @@ src/
 
 ### User Roles & Permissions
 
-| Role       | Permissions                                                                 |
-| ---------- | --------------------------------------------------------------------------- |
-| **Admin**  | Full CRUD on products and patients, Generate AI diagnosis, View all records |
-| **Seller** | View/Update products and patients, Read-only access to catalogs             |
-
-## 🤖 AI Integration
-
-### AI Diagnosis System
-
-- **Primary Provider**: OpenAI GPT-4o-mini
-- **Fallback Provider**: Simulated diagnosis service
-- **Configuration**: Environment-based provider selection
-
-### AI Capabilities
-
-- Medical history analysis
-- Symptom pattern recognition
-- Diagnosis suggestions with professional recommendations
-- Configurable prompts for medical context
-- Error handling and fallback mechanisms
-
-### AI Service Architecture
-
-```typescript
-IAiDiagnosisService (Interface)
-├── OpenAiDiagnosisService (Production)
-└── SimulatedDiagnosisService (Development/Testing)
-```
+| Role       | Permissions                                        |
+| ---------- | -------------------------------------------------- |
+| **Admin**  | Full CRUD on products, View all records            |
+| **Seller** | View/Update products, Read-only access to catalogs |
 
 ## 🗄️ Database Schema
 
@@ -211,20 +160,6 @@ IAiDiagnosisService (Interface)
   "email": "string (unique)",
   "passwordHash": "string",
   "roles": ["Admin" | "Seller"],
-  "createdAt": "Date",
-  "updatedAt": "Date"
-}
-```
-
-#### Patients Collection
-
-```json
-{
-  "_id": "ObjectId",
-  "firstName": "string",
-  "lastName": "string",
-  "birthDate": "Date",
-  "medicalHistory": ["string"],
   "createdAt": "Date",
   "updatedAt": "Date"
 }
@@ -299,15 +234,6 @@ pnpm run test:cov
 - `PATCH /products/:id` - Update product (Admin only)
 - `DELETE /products/:id` - Delete product (Admin only)
 
-### Patient Management
-
-- `GET /patients` - List all patients (Admin only)
-- `GET /patients/:id` - Get patient by ID (Admin & Seller)
-- `POST /patients` - Create patient (Admin only)
-- `PATCH /patients/:id` - Update patient (Admin & Seller)
-- `DELETE /patients/:id` - Delete patient (Admin only)
-- `POST /patients/:id/diagnosis-ai` - Generate AI diagnosis (Admin only)
-
 ### API Documentation
 
 - Available at `/api-docs` when running the application
@@ -324,10 +250,6 @@ DATABASE_URL=mongodb://root:mongopassword@mongo:27017/product_management?authSou
 # JWT
 JWT_SECRET=LUtFvBbMYwx0vXnf
 JWT_EXPIRATION=24h
-
-# AI Services
-AI_SERVICE_PROVIDER=simulated  # or 'openai'
-OPENAI_API_KEY=your_openai_key
 
 # Application
 PORT=3000
@@ -360,16 +282,12 @@ NODE_ENV=development
 
 - Environment-based configuration
 - Database migrations (TypeORM synchronize in development only)
-- AI service failover mechanisms
 - Comprehensive error handling and logging
 
 ## 🎯 Key Business Rules
 
-1. **Patient Data Access**: Sellers can access patient records for business purposes
-2. **Admin Privileges**: Admins have full access to all product and patient records
-3. **AI Diagnosis**: Only admins can generate AI diagnosis
-4. **Medical History**: Automatically tracked with timestamps
-5. **Data Validation**: Strict validation on all product and patient data inputs
+1. **Admin Privileges**: Admins have full access to all product records
+2. **Data Validation**: Strict validation on all product data inputs
 
 ## 🔄 CQRS Implementation
 
@@ -381,24 +299,12 @@ NODE_ENV=development
 - `UpdateProductCommand` - Update product information
 - `DeleteProductCommand` - Remove product record
 
-**Patients:**
-
-- `CreatePatientCommand` - Create new patient
-- `UpdatePatientCommand` - Update patient information
-- `DeletePatientCommand` - Remove patient record
-- `GenerateDiagnosisCommand` - Generate AI diagnosis
-
 ### Queries (Read Operations)
 
 **Products:**
 
 - `FindAllProductsQuery` - Retrieve all products (with optional category filter)
 - `FindProductByIdQuery` - Get specific product
-
-**Patients:**
-
-- `FindAllPatientsQuery` - Retrieve all patients
-- `FindPatientByIdQuery` - Get specific patient
 
 ### Benefits
 
@@ -425,4 +331,4 @@ NODE_ENV=development
 
 ---
 
-_This documentation provides a comprehensive understanding of the Patient Management System architecture, technologies, and implementation details. It serves as a reference for developers working on the project and stakeholders understanding the system capabilities._
+_This documentation provides a comprehensive understanding of the Product Management System architecture, technologies, and implementation details. It serves as a reference for developers working on the project and stakeholders understanding the system capabilities._

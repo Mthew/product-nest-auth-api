@@ -1,20 +1,23 @@
 # Product Management API
 
-This is a **Product and Patient Management System** built with NestJS that provides authentication, authorization, and comprehensive management capabilities. The system is designed as a technical test demonstrating modern backend development practices with TypeScript, following Domain-Driven Design (DDD) and Clean Architecture principles.
+This is a **Product Management System** built with NestJS that provides authentication, authorization, and comprehensive product management capabilities. The system is designed as a technical test demonstrating modern backend development practices with TypeScript.
 
 ## 🎯 Goals
 
-The system manages both product catalogs and patient records, providing AI-assisted medical diagnosis suggestions based on medical history.
+The system manages product catalogs, providing a comprehensive solution for product administration.
 
 ### Core Features:
 
 - **Product Management**: Full CRUD operations for product catalog
-- **Patient Management**: CRUD operations for patient records
 - **User Authentication**: JWT-based authentication system
 - **Role-Based Authorization**: Admin and Seller roles with different permissions
-- **AI Diagnosis**: Integration with OpenAI and simulated AI services for medical diagnosis suggestions
-- **Medical History Tracking**: Comprehensive patient medical history management
 - **Product Catalog**: Comprehensive product management with categories and pricing
+
+## 🏗️ Architecture
+
+This project is built using **Clean Architecture** and **Domain-Driven Design (DDD)** principles. This approach separates the application into distinct layers—Presentation, Application, Domain, and Infrastructure—to create a scalable, maintainable, and testable system.
+
+For a more in-depth explanation of the architecture, design patterns, and project structure, please see the [Context Documentation](doc/context.md).
 
 ## 🛠️ Technology Stack
 
