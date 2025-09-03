@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=mongodb://root:mongopassword@mongo:27017/product_management?authSource=admin
+      - JWT_SECRET=LUtFvBbMYwx0vXnf
+      - JWT_EXPIRATION=24h
+      - AI_SERVICE_PROVIDER=simulated
+    depends_on:
+      - mongo
+    volumes:
+      - ./src:/app/src
+      - ./dist:/app/dist
+    networks:
+      - product-network
+
+  mongo:
+    image: mongo:7-jammy
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=mongopassword
+      - MONGO_INITDB_DATABASE=product_management
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - product-network
+
+volumes:
+  mongo-data:
+
+networks:
+  product-network:
+    driver: bridge
