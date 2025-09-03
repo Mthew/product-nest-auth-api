@@ -51,8 +51,8 @@ export class ProductController {
   ) {}
 
   @Post()
-  @Roles(Role.Doctor) // Only doctors can create products (you can adjust this role as needed)
-  @ApiOperation({ summary: 'Create a new product [Doctor Only]' })
+  @Roles(Role.Admin) // Only admins can create products
+  @ApiOperation({ summary: 'Create a new product [Admin Only]' })
   @ApiBody({ type: CreateProductDto })
   @ApiResponse({
     status: 201,
@@ -72,7 +72,7 @@ export class ProductController {
   }
 
   @Get()
-  @Roles(Role.Doctor, Role.Patient) // Both roles can view products
+  @Roles(Role.Admin, Role.Seller) // Both roles can view products
   @ApiOperation({ summary: 'Retrieve all products or filter by category' })
   @ApiQuery({
     name: 'category',
@@ -90,7 +90,7 @@ export class ProductController {
   }
 
   @Get(':id')
-  @Roles(Role.Doctor, Role.Patient) // Both roles can view individual products
+  @Roles(Role.Admin, Role.Seller) // Both roles can view individual products
   @ApiOperation({ summary: 'Retrieve a specific product by ID' })
   @ApiParam({ name: 'id', description: 'Product ObjectId', type: String })
   @ApiResponse({
@@ -111,8 +111,8 @@ export class ProductController {
   }
 
   @Patch(':id')
-  @Roles(Role.Doctor) // Only doctors can update products
-  @ApiOperation({ summary: "Update a product's information [Doctor Only]" })
+  @Roles(Role.Admin) // Only admins can update products
+  @ApiOperation({ summary: "Update a product's information [Admin Only]" })
   @ApiParam({ name: 'id', description: 'Product ObjectId', type: String })
   @ApiBody({ type: UpdateProductDto })
   @ApiResponse({
@@ -139,9 +139,9 @@ export class ProductController {
   }
 
   @Delete(':id')
-  @Roles(Role.Doctor) // Only doctors can delete products
+  @Roles(Role.Admin) // Only admins can delete products
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ summary: 'Delete a product [Doctor Only]' })
+  @ApiOperation({ summary: 'Delete a product [Admin Only]' })
   @ApiParam({ name: 'id', description: 'Product ObjectId', type: String })
   @ApiResponse({ status: 204, description: 'Product deleted successfully.' })
   @ApiResponse({ status: 404, description: 'Product not found.' })

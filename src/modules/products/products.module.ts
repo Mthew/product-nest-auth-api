@@ -17,6 +17,7 @@ import { DeleteProductHandler } from './application/commands/delete-product/hand
 
 // --- Import Services ---
 import { ProductMapper } from './application/services/product.mapper';
+import { ProductRepositoryProvider } from './infrastructure/persistence/product.repository.provider';
 
 // --- Group Handlers ---
 const CommandHandlers = [
@@ -35,6 +36,7 @@ const QueryHandlers = [FindAllProductsHandler, FindProductByIdHandler];
       provide: PRODUCT_REPOSITORY,
       useExisting: TypeOrmProductRepository,
     },
+    // ProductRepositoryProvider,
     ProductMapper,
     ...CommandHandlers,
     ...QueryHandlers,

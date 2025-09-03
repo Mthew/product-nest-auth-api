@@ -1,11 +1,6 @@
 import { Injectable, OnModuleInit, Inject } from '@nestjs/common';
 
 import {
-  IPatientRepository,
-  PATIENT_REPOSITORY,
-} from '../../modules/patients/domain/interfaces/patient.repository.interface';
-import { Patient } from '../../modules/patients/domain/entities/patient.entity';
-import {
   IProductRepository,
   PRODUCT_REPOSITORY,
 } from '../../modules/products/domain/interfaces/product.repository.interface';
@@ -21,8 +16,6 @@ import { Role } from 'src/modules/user/domain/entities/role.enum';
 export class SeedService implements OnModuleInit {
   constructor(
     @Inject(USER_REPOSITORY) private readonly userRepository: IUserRepository,
-    @Inject(PATIENT_REPOSITORY)
-    private readonly patientRepository: IPatientRepository,
     @Inject(PRODUCT_REPOSITORY)
     private readonly productRepository: IProductRepository,
   ) {}
@@ -31,46 +24,34 @@ export class SeedService implements OnModuleInit {
     console.log('Checking if seeding is needed...');
 
     // Check if users already exist to prevent re-seeding on every restart
-    const existingDoctor =
-      await this.userRepository.findByEmail('doctor@example.com');
-    if (!existingDoctor) {
-      console.log('Seeding initial doctor user...');
-      const doctorUser = await User.create({
-        email: 'doctor@example.com',
+    const existingAdmin =
+      await this.userRepository.findByEmail('admin@example.com');
+    if (!existingAdmin) {
+      console.log('Seeding initial admin user...');
+      const adminUser = await User.create({
+        email: 'admin@example.com',
         plainPassword: 'password123',
-        roles: [Role.Doctor],
+        roles: [Role.Admin],
       });
-      await this.userRepository.save(doctorUser);
-      console.log('Doctor user seeded.');
+      await this.userRepository.save(adminUser);
+      console.log('Admin user seeded.');
     } else {
-      console.log('Doctor user already exists.');
+      console.log('Admin user already exists.');
     }
 
-    const existingPatientUser = await this.userRepository.findByEmail(
-      'patient@example.com',
-    );
-    if (!existingPatientUser) {
-      console.log('Seeding initial patient user...');
-      const patientUser = await User.create({
-        email: 'patient@example.com',
+    const existingSellerUser =
+      await this.userRepository.findByEmail('seller@example.com');
+    if (!existingSellerUser) {
+      console.log('Seeding initial seller user...');
+      const sellerUser = await User.create({
+        email: 'seller@example.com',
         plainPassword: 'password123',
-        roles: [Role.Patient],
+        roles: [Role.Seller],
       });
-      await this.userRepository.save(patientUser);
-
-      // Seed a related patient record (example)
-      console.log('Seeding initial patient record...');
-      const patientRecord = new Patient({
-        firstName: 'Test',
-        lastName: 'Patient',
-        birthDate: '1995-01-20',
-        medicalHistory: ['Initial checkup'],
-      });
-      // Link patient record to user if your design includes it (e.g., patientRecord.userId = patientUser.id)
-      await this.patientRepository.save(patientRecord);
-      console.log('Patient user and record seeded.');
+      await this.userRepository.save(sellerUser);
+      console.log('Seller user seeded.');
     } else {
-      console.log('Patient user already exists.');
+      console.log('Seller user already exists.');
     }
 
     // Seed sample products

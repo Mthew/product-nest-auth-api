@@ -13,7 +13,7 @@ This is a **Product and Patient Management System** built with NestJS that provi
 - **Product Management**: Full CRUD operations for product catalog
 - **Patient Management**: CRUD operations for patient records
 - **User Authentication**: JWT-based authentication system
-- **Role-Based Authorization**: Doctor and Patient roles with different permissions
+- **Role-Based Authorization**: Admin and Seller roles with different permissions
 - **AI Diagnosis**: Integration with OpenAI and simulated AI services for medical diagnosis suggestions
 - **Medical History Tracking**: Comprehensive patient medical history management
 - **Product Catalog**: Comprehensive product management with categories and pricing
@@ -162,7 +162,7 @@ src/
 ### Security Features
 
 - **JWT Authentication** with configurable expiration
-- **Role-Based Authorization** (Doctor, Patient)
+- **Role-Based Authorization** (Admin, Seller)
 - **Password Hashing** using bcrypt
 - **Input Validation** using class-validator
 - **CORS** enabled for cross-origin requests
@@ -170,10 +170,10 @@ src/
 
 ### User Roles & Permissions
 
-| Role        | Permissions                                                     |
-| ----------- | --------------------------------------------------------------- |
-| **Doctor**  | Full CRUD on patients, Generate AI diagnosis, View all patients |
-| **Patient** | View/Update own patient record                                  |
+| Role       | Permissions                                                                 |
+| ---------- | --------------------------------------------------------------------------- |
+| **Admin**  | Full CRUD on products and patients, Generate AI diagnosis, View all records |
+| **Seller** | View/Update products and patients, Read-only access to catalogs             |
 
 ## 🤖 AI Integration
 
@@ -210,7 +210,7 @@ IAiDiagnosisService (Interface)
   "_id": "ObjectId",
   "email": "string (unique)",
   "passwordHash": "string",
-  "roles": ["Doctor" | "Patient"],
+  "roles": ["Admin" | "Seller"],
   "createdAt": "Date",
   "updatedAt": "Date"
 }
@@ -292,21 +292,21 @@ pnpm run test:cov
 
 ### Product Management
 
-- `GET /products` - List all products (Doctor & Patient)
-- `GET /products?category=Electronics` - Filter products by category (Doctor & Patient)
-- `GET /products/:id` - Get product by ID (Doctor & Patient)
-- `POST /products` - Create product (Doctor only)
-- `PATCH /products/:id` - Update product (Doctor only)
-- `DELETE /products/:id` - Delete product (Doctor only)
+- `GET /products` - List all products (Admin & Seller)
+- `GET /products?category=Electronics` - Filter products by category (Admin & Seller)
+- `GET /products/:id` - Get product by ID (Admin & Seller)
+- `POST /products` - Create product (Admin only)
+- `PATCH /products/:id` - Update product (Admin only)
+- `DELETE /products/:id` - Delete product (Admin only)
 
 ### Patient Management
 
-- `GET /patients` - List all patients (Doctor only)
-- `GET /patients/:id` - Get patient by ID (Doctor & Patient)
-- `POST /patients` - Create patient (Doctor only)
-- `PATCH /patients/:id` - Update patient (Doctor & Patient)
-- `DELETE /patients/:id` - Delete patient (Doctor only)
-- `POST /patients/:id/diagnosis-ai` - Generate AI diagnosis (Doctor only)
+- `GET /patients` - List all patients (Admin only)
+- `GET /patients/:id` - Get patient by ID (Admin & Seller)
+- `POST /patients` - Create patient (Admin only)
+- `PATCH /patients/:id` - Update patient (Admin & Seller)
+- `DELETE /patients/:id` - Delete patient (Admin only)
+- `POST /patients/:id/diagnosis-ai` - Generate AI diagnosis (Admin only)
 
 ### API Documentation
 
@@ -365,11 +365,11 @@ NODE_ENV=development
 
 ## 🎯 Key Business Rules
 
-1. **Patient Data Access**: Patients can only access their own records
-2. **Doctor Privileges**: Doctors have full access to all patient records
-3. **AI Diagnosis**: Only doctors can generate AI diagnosis
+1. **Patient Data Access**: Sellers can access patient records for business purposes
+2. **Admin Privileges**: Admins have full access to all product and patient records
+3. **AI Diagnosis**: Only admins can generate AI diagnosis
 4. **Medical History**: Automatically tracked with timestamps
-5. **Data Validation**: Strict validation on all patient data inputs
+5. **Data Validation**: Strict validation on all product and patient data inputs
 
 ## 🔄 CQRS Implementation
 

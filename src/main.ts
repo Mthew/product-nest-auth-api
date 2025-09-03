@@ -28,10 +28,9 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Product Management API')
-    .setDescription('API for managing products and patients')
+    .setDescription('API for managing products with authentication')
     .setVersion('1.0')
     .addTag('products', 'Operations related to products')
-    .addTag('patients', 'Operations related to patients')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);

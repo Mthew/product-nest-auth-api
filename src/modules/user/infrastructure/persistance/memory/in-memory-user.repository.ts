@@ -8,23 +8,23 @@ export class InMemoryUserRepository implements IUserRepository, OnModuleInit {
   private readonly users: Map<string, User> = new Map();
 
   async onModuleInit() {
-    const doctorUser = await User.create({
-      email: 'doctor@example.com',
+    const adminUser = await User.create({
+      email: 'admin@example.com',
       plainPassword: 'password123',
-      roles: [Role.Doctor],
+      roles: [Role.Admin],
     });
-    const patientUser = await User.create({
-      email: 'patient@example.com',
+    const sellerUser = await User.create({
+      email: 'seller@example.com',
       plainPassword: 'password123',
-      roles: [Role.Patient],
+      roles: [Role.Seller],
     });
-    this.save(doctorUser);
-    this.save(patientUser);
+    this.save(adminUser);
+    this.save(sellerUser);
     console.log('Seeded initial users.');
   }
 
   async save(user: User): Promise<User> {
-    this.users.set(user.id, user);
+    this.users.set(user.id.toString(), user);
     console.log(`Saved user: ${user.email}, Total: ${this.users.size}`);
     return user;
   }

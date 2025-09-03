@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MongoRepository } from 'typeorm';
+import { ObjectId } from 'mongodb';
 import { User } from '../../../domain/entities/user.entity';
 import { IUserRepository } from '../../../domain/interfaces/user.repository.interface';
 
@@ -8,7 +9,7 @@ import { IUserRepository } from '../../../domain/interfaces/user.repository.inte
 export class TypeOrmUserRepository implements IUserRepository {
   constructor(
     @InjectRepository(User)
-    private readonly ormRepository: Repository<User>,
+    private readonly ormRepository: MongoRepository<User>,
   ) {}
 
   async save(user: User): Promise<User> {
@@ -17,18 +18,36 @@ export class TypeOrmUserRepository implements IUserRepository {
   }
 
   async findById(id: string): Promise<User | null> {
-    return this.ormRepository.findOneBy({ id });
+    try {
+      // Validate ObjectId format
+      if (!ObjectId.isValid(id)) {
+        return null;
+      }
+
+      const user = await this.ormRepository.findOne({
+        where: { _id: new ObjectId(id) } as any,
+      });
+
+      return user || null;
+    } catch (error) {
+      console.error('Error finding user by id:', error);
+      return null;
+    }
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const lowerEmail = email.toLowerCase();
+    try {
+      const lowerEmail = email.toLowerCase();
 
-    const user = await this.ormRepository
-      .createQueryBuilder('user')
-      .addSelect('user.passwordHash')
-      .where('user.email = :email', { email: lowerEmail })
-      .getOne();
+      // MongoDB native find method - no Query Builder needed
+      const user = await this.ormRepository.findOne({
+        where: { email: lowerEmail } as any,
+      });
 
-    return user;
+      return user || null;
+    } catch (error) {
+      console.error('Error finding user by email:', error);
+      return null;
+    }
   }
 }
