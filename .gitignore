@@ -101,14 +101,15 @@ web_modules/
 # =============================================
 
 # Next.js build output
-apps/web/.next/
-apps/web/out/
+apps/*/.next/
+apps/*/out/
 
 # Next.js production build
-apps/web/build
+apps/*/build
 
 # Next.js TypeScript
-apps/web/next-env.d.ts
+apps/*/next-env.d.ts
+
 
 # Vercel
 .vercel
