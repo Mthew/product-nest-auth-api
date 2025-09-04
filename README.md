@@ -13,6 +13,16 @@ A full-stack agricultural product catalog and management platform built with mod
 - 🏗️ **Clean Architecture** - Both frontend and backend follow Clean Architecture principles
 - 📱 **Responsive Design** - Mobile-first approach with modern UI components
 
+## 📸 Application Screenshots
+
+### 🖥️ Frontend Web Application
+![Frontend Application](./doc/frontend.png)
+*Modern, responsive dashboard with product management interface*
+
+### 🔧 Backend API Documentation
+![Backend API](./doc/backend.png)
+*Interactive Swagger API documentation with comprehensive endpoint coverage*
+
 ## 🏗️ Project Structure
 
 This is a **pnpm workspace monorepo** containing two main applications:
