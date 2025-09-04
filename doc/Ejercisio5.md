@@ -1,9 +1,5 @@
 # Seguridad y Desarrollo en la Nube (Respuestas Breves)
 
-Aquí tienes las respuestas a tus preguntas, presentadas de manera concisa y clara, como lo haría un arquitecto de software.
-
----
-
 ### **¿Cuáles son las diferencias fundamentales entre OAuth y JWT?**
 
 - **OAuth (Open Authorization)**: Es un **protocolo de autorización**. Su objetivo principal es delegar el acceso a recursos. Permite que una aplicación actúe en nombre de un usuario sin necesidad de conocer sus credenciales.
