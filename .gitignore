@@ -119,11 +119,11 @@ apps/*/next-env.d.ts
 # =============================================
 
 # NestJS build output
-apps/api/dist/
-apps/api/build/
+apps/*/dist/
+apps/*/build/
 
 # NestJS cache
-apps/api/.cache
+apps/*/.cache
 
 # =============================================
 # Testing
