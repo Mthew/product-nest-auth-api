@@ -1,3 +1,12 @@
+# =============================================
+# MONOREPO ROOT GITIGNORE
+# Combines NestJS API and Next.js Web App
+# =============================================
+
+# =============================================
+# Node.js & Package Managers
+# =============================================
+
 # Logs
 logs
 *.log
@@ -5,6 +14,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+.pnpm-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -65,18 +75,75 @@ web_modules/
 # Yarn Integrity file
 .yarn-integrity
 
+# pnp
+.pnp
+.pnp.*
+
+# Yarn v3
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# =============================================
+# Environment Variables & Configuration
+# =============================================
+
 # dotenv environment variable files
 .env
 .env.*
 !.env.example
 
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
+# =============================================
+# Next.js (Web App) - apps/web/
+# =============================================
 
 # Next.js build output
-.next
-out
+apps/web/.next/
+apps/web/out/
+
+# Next.js production build
+apps/web/build
+
+# Next.js TypeScript
+apps/web/next-env.d.ts
+
+# Vercel
+.vercel
+
+# =============================================
+# NestJS (API) - apps/api/
+# =============================================
+
+# NestJS build output
+apps/api/dist/
+apps/api/build/
+
+# NestJS cache
+apps/api/.cache
+
+# =============================================
+# Testing
+# =============================================
+
+# Test coverage
+apps/*/coverage
+apps/*/.nyc_output
+
+# Test results
+apps/*/test-results/
+apps/*/playwright-report/
+apps/*/playwright/.cache/
+
+# =============================================
+# Build Tools & Bundlers
+# =============================================
+
+# Parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
 
 # Nuxt.js build / generate output
 .nuxt
@@ -88,24 +155,31 @@ dist
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
 
-# vuepress build output
+# Vuepress build output
 .vuepress/dist
 
-# vuepress v2.x temp and cache directory
+# Vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # Sveltekit cache directory
 .svelte-kit/
 
-# vitepress build output
+# Vitepress build output
 **/.vitepress/dist
 
-# vitepress cache directory
+# Vitepress cache directory
 **/.vitepress/cache
 
 # Docusaurus cache and generated files
 .docusaurus
+
+# Vite logs files
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# =============================================
+# Cloud & Deployment
+# =============================================
 
 # Serverless directories
 .serverless/
@@ -119,21 +193,140 @@ dist
 # Firebase cache directory
 .firebase/
 
+# =============================================
+# IDEs & Editors
+# =============================================
+
+# VS Code
+.vscode-test
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.history/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================
+# Operating Systems
+# =============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.nfs*
+
+# =============================================
+# Security & Certificates
+# =============================================
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.cert
+
+# =============================================
+# Database
+# =============================================
+
+# SQLite
+*.sqlite
+*.sqlite3
+*.db
+
+# MongoDB
+*.mdb
+
+# =============================================
+# Docker
+# =============================================
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# =============================================
+# Miscellaneous
+# =============================================
+
 # TernJS port file
 .tern-port
 
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
+# Lock files (keep pnpm-lock.yaml for monorepo)
+package-lock.json
+yarn.lock
 
-# yarn v3
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+# Temporary files
+*.tmp
+*.temp
 
-# Vite logs files
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
+# Archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Runtime data
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# ESLint cache
+.eslintcache
