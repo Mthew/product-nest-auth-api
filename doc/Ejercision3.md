@@ -159,3 +159,5 @@ Ningún secreto (contraseñas, claves de API) debe estar codificado en el códig
 Cada servicio solo debe tener los permisos estrictamente necesarios para cumplir su función.
 
 - **Implementación**: A través de **políticas de red** (gestionadas por el Service Mesh o Kubernetes) que definen explícitamente qué servicio puede hablar con qué otro. Por ejemplo, el Servicio de Reseñas no tiene ninguna razón para comunicarse con el Servicio de Pagos, por lo que cualquier intento sería bloqueado a nivel de red.
+
+thanks for reading
